@@ -1,40 +1,18 @@
 terraform {
- required_providers {
-   aws = {
-     source  = "hashicorp/aws"
-     version = "~> 3.0"
-   }
- }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
 }
- 
+
+# Configure the AWS Provider
 provider "aws" {
- region = var.region
+  region = "us-east-1"
 }
- 
-variable "region" {
- default = "us-west-1"
- description = "AWS Region"
-}
- 
-variable "ami" {
- default = "ami-00831fc7c1e3ddc60"
- description = "Amazon Machine Image ID for Ubuntu Server 20.04"
-}
- 
-variable "type" {
- default = "t2.micro"
- description = "Size of VM"
-}
- 
-resource "aws_instance" "demo" {
- ami = var.ami
- instance_type = var.type
- 
- tags = {
-   name = "Demo System"
- }
-}
- 
-output "instance_id" {
- instance = aws_instance.demo.id
+
+# Create a VPC
+resource "aws_vpc" "example" {
+  cidr_block = "10.0.0.0/16"
 }
